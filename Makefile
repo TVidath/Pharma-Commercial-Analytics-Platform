@@ -21,17 +21,7 @@ validate:        ## Clean + validate + write data-quality report
 eda:             ## Generate the diagnostic EDA report + figures
 	$(PY) scripts/run_eda.py
 
-segment:         ## Run doctor & hospital segmentation (add ARGS=--db to load tables)
-	$(PY) scripts/run_segmentation.py $(ARGS)
 
-performance:     ## Run opportunity & performance diagnostics (report + register)
-	$(PY) scripts/run_performance.py
-
-score:           ## Run revenue forecast + Commercial Opportunity Score (ARGS=--db to load)
-	$(PY) scripts/run_forecast_scoring.py $(ARGS)
-
-optimize:        ## Run territory & sales-force optimization (ARGS=--db to load)
-	$(PY) scripts/run_optimization.py $(ARGS)
 
 dashboard:       ## Prepare aggregates and launch the Streamlit dashboard
 	$(PY) scripts/prepare_dashboard.py && ./.venv/bin/streamlit run dashboard/streamlit/app.py
