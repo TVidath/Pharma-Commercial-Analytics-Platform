@@ -1,4 +1,4 @@
-# Project Catalyst — local PostgreSQL for the analytics database.
+# Pharma Commercial Analytics Platform — local PostgreSQL for the analytics database.
 # Start:  docker compose up -d
 # Stop:   docker compose down          (add -v to also wipe the data volume)
 services:

@@ -1,5 +1,5 @@
 # =============================================================================
-# PROJECT CATALYST — Engagement Configuration
+# PHARMA COMMERCIAL ANALYTICS PLATFORM — Engagement Configuration
 # Single source of truth for engagement parameters, entity scale, and the
 # synthetic-data generation contract. Consumed by the data engine (Milestone 2),
 # analytics modules, and the financial model so that no magic numbers are

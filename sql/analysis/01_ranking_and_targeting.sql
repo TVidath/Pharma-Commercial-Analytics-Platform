@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Business Query Library 1/4: Ranking & Targeting
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Business Query Library 1/4: Ranking & Targeting
 -- "Which doctors and hospitals should reps prioritise?"
 -- Techniques: RANK, DENSE_RANK, ROW_NUMBER, NTILE, SUM() OVER, PARTITION BY.
 -- Run:  psql -f sql/analysis/01_ranking_and_targeting.sql

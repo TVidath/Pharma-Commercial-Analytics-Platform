@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Project Catalyst — one-command, reproducible build of the data foundation.
+# Pharma Commercial Analytics Platform — one-command, reproducible build of the data foundation.
 #   1. generate synthetic data          -> data/raw/
 #   2. clean + validate + DQ report      -> data/processed/, reports/
 #   3. (optional) load into PostgreSQL   -> requires a running DB

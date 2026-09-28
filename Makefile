@@ -1,4 +1,4 @@
-# Project Catalyst — developer entry points
+# Pharma Commercial Analytics Platform — developer entry points
 # Usage: make <target>
 PY ?= ./.venv/bin/python
 PIP ?= ./.venv/bin/pip

@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Database Schema (DDL)
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Database Schema (DDL)
 -- Engine   : PostgreSQL 15+
 -- Schema   : catalyst
 -- Pattern  : Dimensional (star/snowflake) model for commercial analytics

@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Stored Procedures & Functions
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Stored Procedures & Functions
 -- Engine: PostgreSQL 15+   Schema: catalyst
 -- Table-returning FUNCTIONS power parameterised business questions; the
 -- PROCEDURE demonstrates an action/reporting routine (CALL).

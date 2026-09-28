@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Indexes & Performance Objects
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Indexes & Performance Objects
 -- Engine   : PostgreSQL 15+   Schema: catalyst
 -- Run after: 01_create_tables.sql
 -- Rationale : Analytics workload is read-heavy with roll-ups by month, region,

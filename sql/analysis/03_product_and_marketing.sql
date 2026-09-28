@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Business Query Library 3/4: Product & Marketing
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Business Query Library 3/4: Product & Marketing
 -- "Which products need support, and where is marketing money wasted?"
 -- Techniques: PARTITION BY (rank within TA), share-of-voice vs share-of-market,
 --             running budget share, portfolio mix shift.

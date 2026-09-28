@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Business Query Library 2/4: Regional & Growth
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Business Query Library 2/4: Regional & Growth
 -- "Which regions are winning/losing, and how fast?"
 -- Techniques: LAG/LEAD, moving-average window frames, ROLLUP, RANK, share.
 -- =============================================================================

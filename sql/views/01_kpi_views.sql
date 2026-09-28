@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Semantic KPI Views
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Semantic KPI Views
 -- Engine: PostgreSQL 15+   Schema: catalyst
 -- One definition per KPI (see docs/02_kpi_framework.md). Dashboards, notebooks
 -- and SQL analysis consume these views; they never re-derive metrics.

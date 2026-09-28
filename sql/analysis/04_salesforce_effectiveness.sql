@@ -1,5 +1,5 @@
 -- =============================================================================
--- PROJECT CATALYST — Business Query Library 4/4: Sales-Force Effectiveness
+-- PHARMA COMMERCIAL ANALYTICS PLATFORM — Business Query Library 4/4: Sales-Force Effectiveness
 -- "How productive is the field, and where is effort mis-allocated?"
 -- Techniques: NTILE quartiles, PERCENT_RANK / CUME_DIST, correlation, coverage.
 -- =============================================================================

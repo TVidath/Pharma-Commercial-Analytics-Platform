@@ -1,5 +1,5 @@
 ================================================================================
-    PROJECT CATALYST — COMPLETE PROJECT FLOW (TOP TO BOTTOM)
+    PHARMA COMMERCIAL ANALYTICS PLATFORM — COMPLETE PROJECT FLOW (TOP TO BOTTOM)
     Pharma Commercial Analytics & Sales-Force Effectiveness Platform
     End-to-end data analytics pipeline for a simulated pharmaceutical company
 ================================================================================
