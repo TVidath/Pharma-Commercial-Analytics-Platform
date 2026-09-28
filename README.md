@@ -1,6 +1,5 @@
-<h1 align="center">Project Catalyst</h1>
-<p align="center"><b>Pharma Commercial Analytics & Sales-Force Effectiveness Platform</b><br>
-End-to-end data analytics pipeline for a simulated pharmaceutical company</p>
+<h1 align="center">Pharma Commercial Analytics Platform</h1>
+<p align="center"><b>End-to-end data analytics pipeline for a simulated pharmaceutical company</b></p>
 
 <p align="center">
 <img alt="stack" src="https://img.shields.io/badge/PostgreSQL-15+-336791">
