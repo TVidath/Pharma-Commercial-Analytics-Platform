@@ -121,7 +121,7 @@ Key concepts:
 
 ## Your 2-Minute Project Pitch
 
-> "I built a pharma commercial analytics platform called Project Catalyst. It simulates a pharmaceutical company with 50 sales reps covering 1,500 doctors across India.
+> "I built a pharma commercial analytics platform called Pharma Commercial Analytics Platform. It simulates a pharmaceutical company with 50 sales reps covering 1,500 doctors across India.
 >
 > The core problem: the company has stagnant revenue despite rising promotional spend. My analysis showed that sales effort was mis-allocated — reps were spending time on saturated, high-volume doctors instead of high-potential, under-served ones.
 >

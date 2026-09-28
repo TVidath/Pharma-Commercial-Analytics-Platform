@@ -1,4 +1,4 @@
-# Project Catalyst — Territory & Sales-Force Optimization
+# Pharma Commercial Analytics Platform — Territory & Sales-Force Optimization
 
 **Reproducible** · seed=42 · `scripts/run_optimization.py`.
 

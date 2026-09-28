@@ -1,4 +1,4 @@
-# Project Catalyst — Data Dictionary
+# Pharma Commercial Analytics Platform — Data Dictionary
 
 **Status:** Milestone 1 baseline · **Schema:** `catalyst` (PostgreSQL)
 

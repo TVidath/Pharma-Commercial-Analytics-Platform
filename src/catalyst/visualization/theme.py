@@ -1,4 +1,4 @@
-"""Shared chart theme and palette for Project Catalyst.
+"""Shared chart theme and palette for Pharma Commercial Analytics Platform.
 
 Colours come from a validated, colourblind-safe categorical palette (fixed
 slot order — never cycled). One consistent look across the EDA report, the

@@ -306,7 +306,7 @@ def build_report(data_dir=DATA_PROCESSED) -> pd.DataFrame:
         f"{r['share_pct']:.0f}% | ₹{r['white_space_cr']:.1f}Cr |"
         for _, r in reg.sort_values("white_space_cr", ascending=False).head(8).iterrows())
 
-    md = f"""# Project Catalyst — Opportunity & Performance Diagnostics
+    md = f"""# Pharma Commercial Analytics Platform — Opportunity & Performance Diagnostics
 
 **Reproducible** · seed={cfg['random_seed']} · TTM window · `scripts/run_performance.py`.
 

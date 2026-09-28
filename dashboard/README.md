@@ -1,4 +1,4 @@
-# Project Catalyst — Executive Dashboard
+# Pharma Commercial Analytics Platform — Executive Dashboard
 
 Two deliverables, one design:
 

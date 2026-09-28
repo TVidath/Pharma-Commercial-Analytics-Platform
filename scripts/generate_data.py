@@ -22,7 +22,7 @@ logger = get_logger("catalyst.generate")
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Generate Project Catalyst synthetic data")
+    ap = argparse.ArgumentParser(description="Generate Pharma Commercial Analytics Platform synthetic data")
     ap.add_argument("--config", default=None, help="path to engagement_config.yaml")
     args = ap.parse_args()
 

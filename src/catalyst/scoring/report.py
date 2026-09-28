@@ -52,7 +52,7 @@ def build_report(data_dir=DATA_PROCESSED) -> Tuple[pd.DataFrame, pd.DataFrame]:
     n_p1 = (doc.priority_tier == "P1").sum()
     weights_tbl = " · ".join(f"{k.title()} {int(v*100)}%" for k, v in WEIGHTS.items())
 
-    md = f"""# Project Catalyst — Forecasting & Commercial Opportunity Scoring
+    md = f"""# Pharma Commercial Analytics Platform — Forecasting & Commercial Opportunity Scoring
 
 **Reproducible** · seed={cfg['random_seed']} · `scripts/run_forecast_scoring.py`.
 

@@ -1,4 +1,4 @@
-# Project Catalyst — Documentation Index
+# Pharma Commercial Analytics Platform — Documentation Index
 
 | # | Document | What it covers |
 |---|----------|----------------|

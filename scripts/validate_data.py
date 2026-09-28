@@ -47,7 +47,7 @@ def write_report(res, tables, cfg) -> Path:
             "fact_prescriptions", "fact_competitor_rx", "fact_sales_calls",
             "fact_marketing_spend"])
 
-    md = f"""# Project Catalyst — Data Quality & Plausibility Report
+    md = f"""# Pharma Commercial Analytics Platform — Data Quality & Plausibility Report
 
 **Generated:** {date.today().isoformat()}  ·  **Dataset:** synthetic, seed={cfg['random_seed']}  ·  **Horizon:** {cfg['time']['period_start']} → {cfg['time']['period_end']} ({cfg['time']['history_months']} months)
 

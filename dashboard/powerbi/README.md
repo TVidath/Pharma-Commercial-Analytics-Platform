@@ -1,4 +1,4 @@
-# Project Catalyst — Power BI Executive Dashboard (Build Spec)
+# Pharma Commercial Analytics Platform — Power BI Executive Dashboard (Build Spec)
 
 **Status:** Build-ready specification · **Audience:** BI developer
 **Companion:** a runnable Streamlit mirror lives in [`../streamlit/`](../streamlit/) — use it to preview the layouts and validate numbers.

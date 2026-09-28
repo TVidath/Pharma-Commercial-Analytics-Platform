@@ -113,7 +113,7 @@ def build_report(data_dir=DATA_PROCESSED) -> Dict[str, Any]:
         f"| T-{int(r.territory_id)} | {r.region_name} | {r.calls_per_doctor:.1f} | {r.p1_doctors} | ₹{r.white_space_cr:.2f}Cr |"
         for r in over.itertuples())
 
-    md = f"""# Project Catalyst — Territory & Sales-Force Optimization
+    md = f"""# Pharma Commercial Analytics Platform — Territory & Sales-Force Optimization
 
 **Reproducible** · seed={cfg['random_seed']} · `scripts/run_optimization.py`.
 

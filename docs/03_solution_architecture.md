@@ -1,4 +1,4 @@
-# Project Catalyst — Solution Architecture
+# Pharma Commercial Analytics Platform — Solution Architecture
 
 **Status:** Milestone 1 baseline · **Audience:** technical reviewer / architect
 

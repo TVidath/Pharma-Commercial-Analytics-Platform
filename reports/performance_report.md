@@ -1,4 +1,4 @@
-# Project Catalyst — Opportunity & Performance Diagnostics
+# Pharma Commercial Analytics Platform — Opportunity & Performance Diagnostics
 
 **Reproducible** · seed=42 · TTM window · `scripts/run_performance.py`.
 

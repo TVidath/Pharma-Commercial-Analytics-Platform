@@ -1,4 +1,4 @@
-"""Project Catalyst — Executive Dashboard (Streamlit companion).
+"""Pharma Commercial Analytics Platform — Executive Dashboard (Streamlit companion).
 
 Runnable mirror of the Power BI spec. Reads the precomputed dashboard CSVs
 (data/processed/dashboard/) plus segment/score/recommendation outputs, so it
@@ -28,7 +28,7 @@ MUTED, INK = "#898781", "#0b0b0b"
 LIFECYCLE = {"Launch": BLUE, "Growth": GREEN, "Mature": MUTED, "Decline": RED}
 ACTION = {"Increase": GREEN, "Maintain": BLUE, "Reduce / Efficient": ORANGE}
 
-st.set_page_config(page_title="Project Catalyst — Executive Dashboard",
+st.set_page_config(page_title="Pharma Commercial Analytics Platform — Executive Dashboard",
                    page_icon="💊", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
@@ -102,7 +102,7 @@ def kpi_row(pairs):
 # PAGES
 # ============================================================================
 def page_overview():
-    st.title("Project Catalyst — Commercial Growth Diagnostic")
+    st.title("Pharma Commercial Analytics Platform — Commercial Growth Diagnostic")
     st.caption("Global Pharmaceutical Company · pan-India · synthetic engagement data")
     k = load("kpis.csv").set_index("metric")["value"].to_dict()
     kpi_row([("Annual Revenue", "₹" + k.get("Annual revenue (₹ Cr)", "—") + " Cr"),
@@ -126,12 +126,7 @@ def page_overview():
                      color_discrete_map={"Revenue": BLUE, "Margin": GREEN}, text="value_cr")
         fig.update_layout(title="Opportunity register (₹ Cr)", yaxis_title="", xaxis_title="")
         st.plotly_chart(style(fig), use_container_width=True)
-    scen = load("scenarios.csv")
-    fig = px.bar(scen, x="scenario", y="npv_cr", color="scenario",
-                 color_discrete_map={"Conservative": MUTED, "Base": BLUE, "Aggressive": GREEN},
-                 text="npv_cr")
-    fig.update_layout(title="3-year NPV by scenario (₹ Cr)", xaxis_title="", yaxis_title="NPV ₹ Cr")
-    st.plotly_chart(style(fig, 320, legend=False), use_container_width=True)
+
 
 
 def page_sales():
@@ -286,7 +281,7 @@ PAGES = {
     "💊 Product Analysis": page_product,
 }
 
-st.sidebar.title("💊 Project Catalyst")
+st.sidebar.title("💊 Pharma Commercial Analytics Platform")
 st.sidebar.caption("Executive Dashboard")
 choice = st.sidebar.radio("Navigate", list(PAGES.keys()))
 st.sidebar.divider()

@@ -1,4 +1,4 @@
-# Project Catalyst — KPI Framework & Metric Tree
+# Pharma Commercial Analytics Platform — KPI Framework & Metric Tree
 
 **Status:** Milestone 1 baseline · **Purpose:** Define every metric once, with formula, grain, and decision use, so the SQL layer, Python analytics, dashboard, and deck all speak the same language.
 

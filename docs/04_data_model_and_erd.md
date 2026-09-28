@@ -1,4 +1,4 @@
-# Project Catalyst — Data Model & ER Diagram
+# Pharma Commercial Analytics Platform — Data Model & ER Diagram
 
 **Status:** Milestone 1 baseline · **Engine:** PostgreSQL · **Schema:** `catalyst`
 **Pattern:** Dimensional (star/snowflake) model optimised for commercial analytics.

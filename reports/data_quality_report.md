@@ -1,4 +1,4 @@
-# Project Catalyst — Data Quality & Plausibility Report
+# Pharma Commercial Analytics Platform — Data Quality & Plausibility Report
 
 **Generated:** 2026-09-29  ·  **Dataset:** synthetic, seed=42  ·  **Horizon:** 2023-07 → 2026-06 (36 months)
 

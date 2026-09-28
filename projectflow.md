@@ -1,4 +1,4 @@
-# Project Catalyst — Complete Project Flow
+# Pharma Commercial Analytics Platform — Complete Project Flow
 
 > **Pharma Commercial Analytics & Sales-Force Effectiveness Platform**
 > End-to-end data analytics pipeline for a simulated pharmaceutical company
@@ -34,7 +34,7 @@
 
 ## 1. Project Overview
 
-**Project Catalyst** is a complete commercial analytics platform built for a simulated pharmaceutical company operating across India — 50 sales reps, 5 regions, 1,500 doctors, 150 hospitals, and 5 product brands across 2 therapeutic areas (Cardiology & Diabetology).
+**Pharma Commercial Analytics Platform** is a complete commercial analytics platform built for a simulated pharmaceutical company operating across India — 50 sales reps, 5 regions, 1,500 doctors, 150 hospitals, and 5 product brands across 2 therapeutic areas (Cardiology & Diabetology).
 
 The platform diagnoses why the company has **stagnant revenue despite rising promotional spend**, and produces a data-driven reallocation strategy to capture growth at flat cost.
 

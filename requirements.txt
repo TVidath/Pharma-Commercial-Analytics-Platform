@@ -1,4 +1,4 @@
-# Project Catalyst — Python dependencies
+# Pharma Commercial Analytics Platform — Python dependencies
 # Pinned to compatible ranges; kept Python 3.9+ compatible.
 
 # --- Core data ---

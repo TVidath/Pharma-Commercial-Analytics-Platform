@@ -9,7 +9,7 @@
   1. PROJECT OVERVIEW
 ================================================================================
 
-Project Catalyst is a complete commercial analytics platform built for a
+Pharma Commercial Analytics Platform is a complete commercial analytics platform built for a
 simulated pharmaceutical company operating across India.
 
 Company Profile (Simulated):

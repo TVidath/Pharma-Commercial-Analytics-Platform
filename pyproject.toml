@@ -1,0 +1,12 @@
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project]
+name = "catalyst"
+version = "0.1.0"
+description = "Pharma Commercial Analytics Platform"
+dependencies = [
+    "pandas",
+    "numpy",
+    "scikit-learn"
+]

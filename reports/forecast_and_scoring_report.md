@@ -1,4 +1,4 @@
-# Project Catalyst — Forecasting & Commercial Opportunity Scoring
+# Pharma Commercial Analytics Platform — Forecasting & Commercial Opportunity Scoring
 
 **Reproducible** · seed=42 · `scripts/run_forecast_scoring.py`.
 
