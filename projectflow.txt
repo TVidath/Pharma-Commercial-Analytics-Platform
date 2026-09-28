@@ -1,0 +1,439 @@
+================================================================================
+    PROJECT CATALYST — COMPLETE PROJECT FLOW (TOP TO BOTTOM)
+    Pharma Commercial Analytics & Sales-Force Effectiveness Platform
+    End-to-end data analytics pipeline for a simulated pharmaceutical company
+================================================================================
+
+
+================================================================================
+  1. PROJECT OVERVIEW
+================================================================================
+
+Project Catalyst is a complete commercial analytics platform built for a
+simulated pharmaceutical company operating across India.
+
+Company Profile (Simulated):
+  - 50 sales representatives
+  - 5 regional managers
+  - 1,500 doctors
+  - 150 hospitals
+  - 5 product brands across 2 therapeutic areas (Cardiology & Diabetology)
+  - Pan-India operations (North & South zones)
+
+Problem: Stagnant revenue despite rising promotional spend.
+Root Cause: Allocation and effectiveness problem, not demand.
+
+Hypothesis:
+  A large share of effort is concentrated on saturated high-volume prescribers
+  and mature products, while a quantifiable pool of growth-elastic doctors,
+  hospitals and territories is under-served. Reallocating 15-25% of selling
+  capacity and re-weighting marketing can lift revenue ~8-12% in 12-18 months
+  at FLAT COST.
+
+What I Built:
+  - Synthetic data engine generating ~500,000 rows with business patterns
+  - Full ETL pipeline: generation -> cleaning -> validation -> PostgreSQL load
+  - Dimensional data model (star schema) with SQL KPI library
+  - Doctor segmentation (Potential x Value 9-box) and hospital tiering
+  - Performance diagnostics (Rx, regional, product, marketing)
+  - Revenue forecasting (ETS model + intervention overlay)
+  - Commercial Opportunity Score (0-100 doctor prioritisation index)
+  - Territory optimization and capacity-neutral call reallocation
+  - 7-page interactive Streamlit executive dashboard
+  - Automated end-to-end via Makefile with pytest tests
+
+
+================================================================================
+  2. SIX BUSINESS PATTERNS IN THE SIMULATION
+================================================================================
+
+  1. Sales effort tracks CURRENT Rx (corr=0.72), not POTENTIAL (corr=0.28)
+     -> Effort is mis-allocated; high-potential doctors are under-served.
+
+  2. Diminishing returns on call frequency
+     -> Saturation curve: r = 1 - exp(-0.35 * calls)
+
+  3. 1 under-invested territory has disproportionate white space
+
+  4. A declining hero brand ("Lipivas") masks portfolio growth
+     -> Growth brands are hidden by the decliner.
+
+  5. Marketing spend is skewed toward a low-ROI channel
+     -> Print & Conferences: 34% budget, low ROI
+     -> Digital & CME: small budget, high ROI
+
+  6. Specific zones are losing competitive share
+
+
+================================================================================
+  3. ARCHITECTURE
+================================================================================
+
+  +---------------------------------------------------------------+
+  |  PRESENTATION LAYER                                           |
+  |  Streamlit dashboard (7 pages) . Power BI spec . Reports      |
+  +---------------------------------------------------------------+
+  |  DECISION LAYER                                               |
+  |  Opportunity scoring . Territory optimization                 |
+  +---------------------------------------------------------------+
+  |  ANALYTICS LAYER                                              |
+  |  EDA . Segmentation . Rx opportunity . Performance            |
+  |  Marketing mix . Forecasting (ETS + driver overlay)           |
+  +---------------------------------------------------------------+
+  |  STORAGE LAYER                                                |
+  |  PostgreSQL (catalyst schema) . Dimensional model             |
+  |  Views . Stored procedures . KPI library                      |
+  +---------------------------------------------------------------+
+  |  FOUNDATION LAYER                                             |
+  |  Synthetic data engine (~500,000 rows)                        |
+  |  ETL pipeline . Cleaning . Validation . DQ Report             |
+  +---------------------------------------------------------------+
+                config/engagement_config.yaml drives every layer
+
+
+================================================================================
+  4. TECHNOLOGY STACK
+================================================================================
+
+  Language:         Python 3.9+
+  Database:         PostgreSQL 15+ (via Docker)
+  Core Data:        NumPy, Pandas, PyYAML
+  Database ORM:     SQLAlchemy 2.0, psycopg2
+  Analytics/ML:     scikit-learn, statsmodels, scipy
+  Visualization:    Matplotlib, Seaborn, Plotly
+  Dashboard:        Streamlit 1.30+
+  Testing:          pytest 7.4+
+  Containerization: Docker Compose
+  Build System:     Makefile + Bash
+
+
+================================================================================
+  5. CONFIGURATION — SINGLE SOURCE OF TRUTH
+================================================================================
+
+  File: config/engagement_config.yaml
+
+  Sections:
+    engagement:    scope, currency (INR), fiscal year start (April)
+    time:          36 months history (2023-07 to 2026-06), 12-month forecast
+    entities:      2 zones, 5 regions, 50 reps, 1.5K doctors, 150 hospitals
+    random_seed:   42 (full reproducibility)
+    database:      PostgreSQL connection (catalyst schema, port 5432)
+    data_logic:    business dynamics controlling the simulation
+
+
+================================================================================
+  6. EXECUTION PIPELINE — END-TO-END FLOW (9 PHASES)
+================================================================================
+
+------------------------------------------------------------------------
+  PHASE 1: Data Generation
+  Command: make generate -> python scripts/generate_data.py
+------------------------------------------------------------------------
+
+  Step 1: load_config() -> reads engagement_config.yaml
+
+  Step 2: build_dimensions(cfg)
+    File: src/catalyst/data_generation/dimensions.py
+    Creates 12 dimension tables:
+      dim_month, dim_zone, dim_region, dim_regional_manager,
+      dim_territory, dim_sales_rep, dim_hospital, dim_doctor,
+      dim_therapeutic_area, dim_product, dim_competitor_product, dim_campaign
+
+  Step 3: compute_doctor_latents(cfg, dims)
+    File: src/catalyst/data_generation/latent.py
+    Two hidden drivers per doctor:
+      - potential (0-1): structural prescribing capacity
+      - adoption (0-1): how much potential is currently realized
+    Creates white space by decoupling adoption for:
+      - Competitor-loyal doctors (~18%): adoption x 0.45
+      - Under-invested territories: adoption x 0.60
+
+  Step 4: build_facts(cfg, dims, latents)
+    File: src/catalyst/data_generation/facts.py
+    Creates 4 fact tables (~500,000 rows):
+      fact_prescriptions, fact_competitor_rx, fact_sales_calls,
+      fact_marketing_spend
+
+  Step 5: write_raw(tables) -> 16 CSVs to data/raw/
+
+  OUTPUT: data/raw/*.csv (16 CSV files, ~500k rows total)
+
+
+------------------------------------------------------------------------
+  PHASE 2: Data Pipeline — Cleaning & Validation
+  Command: make validate -> python scripts/validate_data.py
+------------------------------------------------------------------------
+
+  Step 1: clean_all() -> enforce dtypes, remove negatives, dedup
+    File: src/catalyst/data_pipeline/clean.py
+    Writes cleaned CSVs to data/processed/
+
+  Step 2: load_tables() + run_all() -> 3 categories of validation:
+    a) Structural: FK integrity, grain uniqueness, NOT NULL, ranges
+    b) Plausibility: revenue reconciliation, seasonality
+    c) Business-pattern recovery: validates embedded patterns
+
+  Step 3: write_report() -> reports/data_quality_report.md
+
+  OUTPUT: data/processed/*.csv + reports/data_quality_report.md
+
+
+------------------------------------------------------------------------
+  PHASE 3: Database Build — PostgreSQL Load
+  Command: make db-up -> make db-load
+------------------------------------------------------------------------
+
+  1. docker compose up -d -> PostgreSQL 15 container (port 5432)
+  2. Execute sql/schema/01_create_tables.sql (16 tables)
+  3. Bulk COPY all 16 CSVs (single transaction)
+  4. Execute sql/schema/02_indexes_constraints.sql
+  5. Build views (sql/views/01_kpi_views.sql)
+  6. Build stored procedures (sql/procedures/01_procedures.sql)
+  7. ANALYZE on all fact tables
+
+  OUTPUT: Fully loaded PostgreSQL database
+
+
+------------------------------------------------------------------------
+  PHASE 4: Diagnostic Analytics — EDA
+  Command: make eda -> python scripts/run_eda.py
+------------------------------------------------------------------------
+
+  Generates 10 diagnostic charts + reports/eda_report.md:
+    01-10: Revenue trends, zone distribution, product portfolio,
+           doctor ranking, call heatmap, Pareto, marketing spend,
+           seasonality, competitive share
+
+  SQL Analysis Library (sql/analysis/):
+    01_ranking_and_targeting.sql (doctor ranking, NTILE)
+    02_regional_and_growth.sql (growth, YoY, ROLLUP)
+    03_product_and_marketing.sql (product P&L, channel ROI)
+    04_salesforce_effectiveness.sql (rep productivity)
+
+  OUTPUT: reports/eda_report.md + reports/figures/01_* through 10_*
+
+
+------------------------------------------------------------------------
+  PHASE 5: Customer Segmentation
+  Command: make segment -> python scripts/run_segmentation.py
+------------------------------------------------------------------------
+
+  Doctor Segmentation (src/catalyst/segmentation/doctors.py):
+    Transparent potential score (0-100):
+      0.40 x panel + 0.20 x specialty + 0.20 x hospital
+    + 0.10 x urbanicity + 0.10 x KOL
+
+    Potential x Value 9-Box:
+      Champions (H,H), Rising Stars (H,M), Hidden Gems (H,L)
+      Reliable Core (M,H), Steady (M,M), Developers (M,L)
+      Loyal Small (L,H), Occasional (L,M), Low Priority (L,L)
+    Each segment: action, cadence, channels, KPI
+
+    K-Means validation (k=4): ARI + Silhouette Score
+
+  Hospital Segmentation (src/catalyst/segmentation/hospitals.py):
+    Tiers: Platinum (top 10%) > Gold > Silver > Bronze (bottom 30%)
+
+  OUTPUT: reports/segmentation_report.md
+          data/processed/doctor_segments.csv
+          data/processed/hospital_segments.csv
+
+
+------------------------------------------------------------------------
+  PHASE 6: Performance & Opportunity Diagnostics
+  Command: make performance -> python scripts/run_performance.py
+------------------------------------------------------------------------
+
+  Prescription opportunity (doctor-level Rx gaps, white space Rs)
+  Regional & market performance (TTM revenue, growth, share)
+  Product portfolio (growth vs margin, lifecycle stages)
+  Marketing effectiveness (channel ROI, budget share)
+
+  Opportunity Register (Rs Cr):
+    White space + Share recapture + Marketing reallocation
+
+  OUTPUT: reports/performance_report.md
+          data/processed/opportunity_register.csv
+
+
+------------------------------------------------------------------------
+  PHASE 7: Forecasting & Opportunity Scoring
+  Command: make score -> python scripts/run_forecast_scoring.py
+------------------------------------------------------------------------
+
+  Revenue Forecast (src/catalyst/forecasting/forecast.py):
+    ETS model (additive trend + seasonal, 12-period)
+    Baseline + intervention overlay (phased opportunity capture)
+
+  Opportunity Score (src/catalyst/scoring/opportunity_score.py):
+    Score = 0.30 x Potential + 0.30 x Headroom + 0.15 x Momentum
+          + 0.15 x Accessibility + 0.10 x Competitive
+    Priority: P1 (top 20%) | P2 (50-80%) | P3 (bottom 50%)
+
+  OUTPUT: reports/forecast_and_scoring_report.md
+          data/processed/doctor_opportunity_score.csv
+          data/processed/territory_opportunity_score.csv
+
+
+------------------------------------------------------------------------
+  PHASE 8: Territory & Sales-Force Optimization
+  Command: make optimize -> python scripts/run_optimization.py
+------------------------------------------------------------------------
+
+  Ideal call plan: P1=18/yr, P2=9/yr, P3=3/yr
+
+  Capacity-neutral reallocation:
+    rec_calls = current_capacity x (ideal / total_ideal)
+    ~34% of calls shift from P3 -> P1 at FLAT COST
+
+  Territory actions:
+    Deploy rep (vacant) | Reinforce (under-served)
+    Over-served (trim) | Balanced
+
+  OUTPUT: reports/optimization_report.md
+          data/processed/doctor_call_plan.csv
+          data/processed/territory_plan.csv
+
+
+------------------------------------------------------------------------
+  PHASE 9: Executive Dashboard
+  Command: make dashboard
+------------------------------------------------------------------------
+
+  Step 1: prepare_dashboard.py
+    Precompute 8 aggregate CSVs for instant loading
+
+  Step 2: streamlit run dashboard/streamlit/app.py
+    7 interactive pages (NO database required):
+      1. Executive Overview
+      2. Sales Performance
+      3. Regional Performance
+      4. Doctor Segmentation
+      5. Hospital Analysis
+      6. Marketing ROI
+      7. Product Analysis
+
+  OUTPUT: Running Streamlit dashboard at localhost
+
+
+================================================================================
+  7. DATA MODEL — DIMENSIONAL SCHEMA
+================================================================================
+
+  DIMENSION TABLES (12):
+    dim_month              36 rows    Calendar months
+    dim_zone                2 rows    North, South
+    dim_region              5 rows    Reporting regions
+    dim_regional_manager    5 rows    Regional managers
+    dim_territory          50 rows    Sales territories
+    dim_sales_rep          50 rows    Field reps
+    dim_hospital          150 rows    Hospitals
+    dim_doctor           1500 rows    Prescribing doctors
+    dim_therapeutic_area    2 rows    Cardiology, Diabetology
+    dim_product             5 rows    Company brands
+    dim_competitor_product  6 rows    Competitor brands
+    dim_campaign          varies      Marketing campaigns
+
+  FACT TABLES (4):
+    fact_prescriptions    ~200K rows  doctor x product x month
+    fact_competitor_rx    ~100K rows  doctor x TA x month
+    fact_sales_calls      ~180K rows  rep x doctor x month
+    fact_marketing_spend  varies      campaign x region x month
+
+
+================================================================================
+  8. SQL SEMANTIC LAYER
+================================================================================
+
+  Views (sql/views/01_kpi_views.sql):
+    vw_marketing_roi, vw_doctor_value,
+    vw_regional_performance, vw_product_performance
+
+  Stored Procedures (sql/procedures/01_procedures.sql):
+    fn_top_doctors(region, limit), fn_territory_summary()
+
+  Analysis Library (sql/analysis/):
+    01_ranking_and_targeting.sql (NTILE, ranking)
+    02_regional_and_growth.sql (YoY, ROLLUP)
+    03_product_and_marketing.sql (product P&L, channel ROI)
+    04_salesforce_effectiveness.sql (rep productivity, correlation)
+
+
+================================================================================
+  9. MODULE DEPENDENCY GRAPH
+================================================================================
+
+  engagement_config.yaml
+          |
+          v
+    data_generation --> data_pipeline --> analytics/eda --> segmentation
+                                                              |
+                                            analytics/performance
+                                                   |
+                                         forecasting + scoring
+                                                   |
+                                            optimization
+                                                   |
+                                         dashboard (Streamlit)
+
+
+================================================================================
+  10. TESTING
+================================================================================
+
+  Command: make test -> pytest tests/ -q
+
+    conftest.py               Shared fixtures
+    test_data_pipeline.py     Generation, cleaning, validation, FK integrity
+    test_analytics.py         EDA report, chart output
+    test_segmentation.py      9-box, hospital tiers, K-means validation
+    test_performance.py       Opportunity register, metrics
+    test_forecast_scoring.py  ETS forecast, opportunity score
+    test_optimization.py      Call plan, territory workload
+
+
+================================================================================
+  11. QUICKSTART COMMANDS
+================================================================================
+
+  make setup              # Create venv + install dependencies
+  make build              # Generate ~500k rows + validate + DQ report
+  make db-up              # Start PostgreSQL (Docker)
+  make db-load            # Schema, bulk-load, views & procedures
+  make eda                # Diagnostic EDA report + 10 figures
+  make segment            # Doctor 9-box + hospital tiers
+  make performance        # Opportunity diagnostics + Rs register
+  make score              # Revenue forecast + Opportunity Score
+  make optimize           # Territory optimization + call reallocation
+  make dashboard          # Launch Streamlit dashboard
+  make test               # Run pytest tests
+  make clean              # Remove generated data artifacts
+
+
+================================================================================
+  12. OUTPUT ARTIFACTS
+================================================================================
+
+  Data Files:
+    data/raw/*.csv (16 files)                    <- data generation
+    data/processed/*.csv (16 files)              <- ETL pipeline
+    data/processed/doctor_segments.csv           <- segmentation
+    data/processed/hospital_segments.csv         <- segmentation
+    data/processed/opportunity_register.csv      <- performance
+    data/processed/doctor_opportunity_score.csv  <- scoring
+    data/processed/territory_plan.csv            <- optimization
+    data/processed/dashboard/*.csv (8 files)     <- dashboard prep
+
+  Reports:
+    data_quality_report.md
+    eda_report.md
+    segmentation_report.md
+    performance_report.md
+    forecast_and_scoring_report.md
+    optimization_report.md
+
+
+================================================================================
+  All data is synthetic and privacy-safe.
+================================================================================

@@ -1,0 +1,23 @@
+# Project Catalyst — local PostgreSQL for the analytics database.
+# Start:  docker compose up -d
+# Stop:   docker compose down          (add -v to also wipe the data volume)
+services:
+  postgres:
+    image: postgres:15
+    container_name: catalyst_pg
+    environment:
+      POSTGRES_USER: catalyst
+      POSTGRES_PASSWORD: catalyst
+      POSTGRES_DB: catalyst
+    ports:
+      - "5432:5432"
+    volumes:
+      - catalyst_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalyst -d catalyst"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  catalyst_pgdata:

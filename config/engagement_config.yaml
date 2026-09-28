@@ -1,0 +1,88 @@
+# =============================================================================
+# PROJECT CATALYST — Engagement Configuration
+# Single source of truth for engagement parameters, entity scale, and the
+# synthetic-data generation contract. Consumed by the data engine (Milestone 2),
+# analytics modules, and the financial model so that no magic numbers are
+# hard-coded in source.
+# -----------------------------------------------------------------------------
+# Owner: Commercial Analytics Team  |  Status: M1 design baseline
+# -----------------------------------------------------------------------------
+
+engagement:
+  code_name: "Catalyst"
+  client: "Global Pharmaceutical Company (anonymised)"
+  scope: "Pan-India commercial diagnostic & sales-force effectiveness"
+  currency: "INR"
+  currency_symbol: "₹"
+  reporting_unit: "INR Crore"          # 1 Crore = 10,000,000
+  fiscal_year_start_month: 4           # April (typical Indian FY)
+
+# -----------------------------------------------------------------------------
+# TIME HORIZON
+# 36 months of monthly history ending at the last closed month before "today".
+# Anchors every trend, growth, seasonality and forecasting calculation.
+# -----------------------------------------------------------------------------
+time:
+  history_months: 36
+  period_end: "2026-06"                # last closed month
+  period_start: "2023-07"              # derived: period_end - 35 months
+  forecast_horizon_months: 12          # used in Milestone 6
+
+# -----------------------------------------------------------------------------
+# ENTITY SCALE  (fixed by the client brief — do not change without re-baselining)
+# -----------------------------------------------------------------------------
+entities:
+  zones: 2                             # North, South
+  regions: 5                           # 1 Regional Manager per region
+  territories: 50                      # 1 Sales Rep per territory
+  regional_managers: 5
+  sales_reps: 50
+  doctors: 1500
+  hospitals: 150
+  products: 5                          # across 2 therapeutic areas
+  therapeutic_areas: 2
+  competitor_products: 6
+
+# Derived planning ratios (for sanity, not enforced):
+#   doctors_per_rep   = 30
+#   hospitals_per_rep = 3
+#   reps_per_region   = 24
+
+# -----------------------------------------------------------------------------
+# REPRODUCIBILITY
+# -----------------------------------------------------------------------------
+random_seed: 42
+
+# -----------------------------------------------------------------------------
+# DATABASE
+# -----------------------------------------------------------------------------
+database:
+  engine: "postgresql"
+  schema: "catalyst"
+  host: "localhost"
+  port: 5432
+  dbname: "catalyst"
+  # credentials are read from environment variables, never committed:
+  #   CATALYST_DB_USER, CATALYST_DB_PASSWORD
+
+# -----------------------------------------------------------------------------
+# SYNTHETIC-DATA BUSINESS LOGIC
+# These parameters control the commercial dynamics embedded in the simulation
+# so the diagnostic analytics can identify real-world patterns.
+# -----------------------------------------------------------------------------
+data_logic:
+  # Rep-call -> Rx response follows diminishing returns: r = 1 - exp(-k * calls)
+  call_response_saturation_k: 0.35
+  # Historical mis-allocation: reps chase existing volume, not potential.
+  # Correlation between call effort and *current* Rx (vs. potential).
+  effort_to_current_rx_corr: 0.72
+  effort_to_potential_corr: 0.28
+  # Deliberately under-invested growth territories (the reallocation prize)
+  underinvested_territory_count: 1
+  # Portfolio drag: one mature hero brand in structural decline
+  declining_hero_brand: "Lipivas"
+  # Marketing: spend is skewed toward a low-ROI channel
+  overfunded_low_roi_channel: "Print & Conferences"
+  underfunded_high_roi_channel: "Digital & CME"
+  # Base annual revenue target the financial model reconciles to
+  target_annual_revenue_inr_cr: 1450
